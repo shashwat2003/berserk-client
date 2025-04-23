@@ -36,3 +36,5 @@ tsconfig.tsbuildinfo
 /android
 
 tamagui.css
+
+src/services/api/gen

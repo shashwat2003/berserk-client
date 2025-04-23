@@ -3,7 +3,7 @@ import {
   AnimatePresence,
   Label,
   Input as OgInput,
-  Theme,
+  YStack,
   type InputProps as OgInputProps,
 } from 'tamagui'
 import { useFieldContext } from './form/context'
@@ -22,7 +22,9 @@ export const Input = OgInput.styleable<InputExtraProps>((propsIn, forwardedRef) 
   const field = useFieldContext<string>()
 
   const mergedHelperText = useMemo(() => {
-    return field.state.meta.errors.length ? field.state.meta.errors : [help ?? ' ']
+    return field.state.meta.errors.length
+      ? field.state.meta.errors.map((each) => each.message)
+      : [help ?? ' ']
   }, [field.state.meta.errors, help])
 
   const themeProps = useMemo(() => {
@@ -30,7 +32,7 @@ export const Input = OgInput.styleable<InputExtraProps>((propsIn, forwardedRef) 
   }, [field.state.meta])
 
   return (
-    <Theme {...themeProps}>
+    <YStack theme={themeProps.name}>
       <Label id={field.name}>{label}</Label>
       <OgInput
         {...rest}
@@ -47,7 +49,7 @@ export const Input = OgInput.styleable<InputExtraProps>((propsIn, forwardedRef) 
           ))}
         </AnimatePresence>
       )}
-    </Theme>
+    </YStack>
   )
 })
 

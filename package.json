@@ -38,7 +38,8 @@
     "react-native-screens": "4.4.0",
     "react-native-svg": "15.8.0",
     "react-native-web": "^0.19.12",
-    "tamagui": "^1.125.28"
+    "tamagui": "^1.125.28",
+    "zod": "^3.24.3"
   },
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
