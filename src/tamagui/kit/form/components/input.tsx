@@ -4,6 +4,7 @@ import { View } from 'tamagui'
 import { Input } from '../../input'
 import { useFieldContext } from '../context'
 import { getThemeNameForStatus } from '../utils'
+
 type FormExtraInputProps = {
   allowClear?: boolean | { clearIcon: ReactNode }
   onClear?: () => void
