@@ -21,8 +21,8 @@ const SubmitFrame = Button.styleable((props, forwardRef) => {
           <Form.Trigger asChild>
             <Button
               {...props}
-              loading={isSubmitting}
-              disabled={!canSubmit}
+              loading={props.loading ?? isSubmitting}
+              disabled={props.disabled ?? !canSubmit}
               ref={forwardRef}
               onPress={handleSubmit}
             />

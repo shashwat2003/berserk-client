@@ -26,3 +26,5 @@ export const withPassword = <T extends BaseInputProps = BaseInputProps>(
     )
   })
 }
+
+export type InputPasswordProps = BaseInputProps & InputPasswordExtraProps

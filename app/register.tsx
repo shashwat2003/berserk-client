@@ -1,7 +1,6 @@
 import { Page } from '@/components/page'
-import { RegisterForm, registerFormOpts, SendOtpForm } from '@/features/auth/register/form'
+import { RegisterForm, registerFormOpts } from '@/features/auth/register/form'
 import { v1CoreSendOtpPostMutation } from '@/services/api/gen/@tanstack/react-query.gen'
-import { Button } from '@/tamagui/kit/button'
 import { useAppForm } from '@/tamagui/kit/form'
 import { Typography } from '@/tamagui/kit/typography'
 import { useMutation } from '@tanstack/react-query'
@@ -45,23 +44,18 @@ export const RegisterPage = () => {
           @best_app
         </Typography.Title>
         <form.AppForm gap={'$sm'}>
-          <SendOtpForm form={form} />
+          <RegisterForm form={form} />
           <form.Subscribe
             selector={(state) => state.values.otpSent}
-            children={(otpSent) =>
-              !otpSent ? (
-                <Button loading={sendOtpMutation.isPending} onPress={sendOtp}>
-                  <Button.Text>Send OTP</Button.Text>
-                </Button>
-              ) : (
-                <>
-                  <RegisterForm form={form} />
-                  <form.Submit>
-                    <Typography.Text>Register User</Typography.Text>
-                  </form.Submit>
-                </>
-              )
-            }
+            children={(otpSent) => (
+              <form.Submit
+                loading={!otpSent ? sendOtpMutation.isPending : undefined}
+                disabled={!otpSent ? sendOtpMutation.isPending : undefined}
+                onPress={!otpSent ? sendOtp : undefined}
+              >
+                <Typography.Text>{!otpSent ? 'Send OTP' : 'Register User'}</Typography.Text>
+              </form.Submit>
+            )}
           />
         </form.AppForm>
       </YStack>
