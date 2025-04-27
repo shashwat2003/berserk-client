@@ -1,8 +1,9 @@
 import { X } from '@tamagui/lucide-icons'
-import { type ReactNode, useMemo } from 'react'
+import { type ReactNode, useContext, useMemo } from 'react'
 import { View } from 'tamagui'
+import { DisabledContext } from '../../config-provider/disabled-context'
 import { Input } from '../../input'
-import { useFieldContext } from '../context'
+import { FormConfigContext, useFieldContext } from '../context'
 import { getThemeNameForStatus } from '../utils'
 
 type FormExtraInputProps = {
@@ -11,7 +12,27 @@ type FormExtraInputProps = {
 }
 
 export const FormInput = Input.styleable<FormExtraInputProps>((propsIn, forwardedRef) => {
-  const { allowClear, suffix, onClear, ...props } = propsIn
+  const {
+    allowClear,
+    suffix,
+    onClear,
+    layout: layoutProp,
+    disabled: disabledProp,
+    labelGap: labelGapProps,
+    ...props
+  } = propsIn
+
+  const field = useFieldContext<string>()
+  const fieldConfigContext = useContext(FormConfigContext)
+
+  const disabledContext = useContext(DisabledContext)
+
+  const disabled = disabledProp ?? disabledContext
+
+  const themeName = useMemo(() => {
+    return getThemeNameForStatus(field.state.meta)
+  }, [field.state.meta])
+
   const allowClearNeeded = !!allowClear
   const allowClearIcon =
     typeof allowClear === 'object' && allowClear?.clearIcon ? (
@@ -19,16 +40,17 @@ export const FormInput = Input.styleable<FormExtraInputProps>((propsIn, forwarde
     ) : (
       <X size={'$icon.14'} />
     )
-  const field = useFieldContext<string>()
 
-  const themeName = useMemo(() => {
-    return getThemeNameForStatus(field.state.meta)
-  }, [field.state.meta])
+  const layout = layoutProp ?? fieldConfigContext.layout
+  const labelGap = labelGapProps ?? fieldConfigContext.labelGap
 
   return (
     <Input
       ref={forwardedRef}
       {...props}
+      disabled={disabled}
+      labelGap={labelGap}
+      layout={layout}
       errors={field.state.meta.errors.map((each) => each.message)}
       theme={themeName}
       value={field.state.value}
@@ -40,7 +62,7 @@ export const FormInput = Input.styleable<FormExtraInputProps>((propsIn, forwarde
           {allowClearNeeded && (
             <View
               animation={'100ms'}
-              cursor={field.state.value ? 'pointer' : 'none'}
+              cursor={field.state.value && !disabled ? 'pointer' : 'none'}
               p={'$xs'}
               backgroundColor={'$borderColor'}
               borderRadius={'$full'}
@@ -50,8 +72,8 @@ export const FormInput = Input.styleable<FormExtraInputProps>((propsIn, forwarde
                 field.setValue('')
                 onClear?.()
               }}
-              disabled={!field.state.value}
-              opacity={field.state.value ? 1 : 0}
+              disabled={!field.state.value || disabled}
+              opacity={field.state.value && !disabled ? 1 : 0}
             >
               {allowClearIcon}
             </View>

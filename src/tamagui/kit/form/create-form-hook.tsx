@@ -12,6 +12,7 @@ import type {
 import { useForm, type FieldComponent, type ReactFormExtendedApi } from '@tanstack/react-form'
 import type { ComponentType, Context, JSX, PropsWithChildren } from 'react'
 import { Form, type FormProps } from 'tamagui'
+import { FormConfigContext } from './context'
 
 /**
  * TypeScript inferencing is weird.
@@ -99,7 +100,7 @@ type AppFieldExtendedReactFormApi<
       TSubmitMeta,
       NoInfer<TFieldComponents>
     >
-    AppForm: ComponentType<PropsWithChildren<FormProps>>
+    AppForm: ComponentType<PropsWithChildren<FormProps & FormConfigContext>>
   }
 
 export interface WithFormProps<
@@ -202,13 +203,15 @@ export function createFormHook<
     const form = useForm(props)
 
     const AppForm = useMemo(() => {
-      return (({ children, ...rest }) => {
+      return (({ children, layout, labelGap, ...rest }) => {
         return (
           <formContext.Provider value={form}>
-            <Form {...rest}>{children}</Form>
+            <FormConfigContext.Provider value={{ layout, labelGap }}>
+              <Form {...rest}>{children}</Form>
+            </FormConfigContext.Provider>
           </formContext.Provider>
         )
-      }) as ComponentType<PropsWithChildren<FormProps>>
+      }) as ComponentType<PropsWithChildren<FormProps & FormConfigContext>>
     }, [form])
 
     const AppField = useMemo(() => {
