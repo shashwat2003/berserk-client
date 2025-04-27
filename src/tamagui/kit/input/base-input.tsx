@@ -75,7 +75,7 @@ export const BaseInput = OgInput.styleable<InputExtraProps>((propsIn, forwardedR
       flexDirection={layout === 'horizontal' ? 'row' : 'column'}
     >
       <Label id={name}>{label}</Label>
-      <YStack>
+      <YStack width={'100%'}>
         <Group
           orientation="horizontal"
           borderRadius={variant === 'underlined' ? '$none' : '$true'}

@@ -65,7 +65,7 @@ export const RegisterForm = withForm({
         <form.AppField
           name="password"
           children={(field) => (
-            <field.Input label="Password" secureTextEntry help="your-secure-password" />
+            <field.Input.Password label="Password" secureTextEntry help="your-secure-password" />
           )}
         />
         <form.AppField
@@ -80,11 +80,7 @@ export const RegisterForm = withForm({
             },
           }}
           children={(field) => (
-            <field.Input
-              label="Confirm Password"
-              secureTextEntry
-              help="your-secure-password-again"
-            />
+            <field.Input.Password label="Confirm Password" help="your-secure-password-again" />
           )}
         />
       </>

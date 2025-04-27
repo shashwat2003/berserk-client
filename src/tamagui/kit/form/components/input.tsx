@@ -1,8 +1,9 @@
 import { X } from '@tamagui/lucide-icons'
 import { type ReactNode, useContext, useMemo } from 'react'
-import { View } from 'tamagui'
+import { View, withStaticProperties } from 'tamagui'
 import { DisabledContext } from '../../config-provider/disabled-context'
 import { Input } from '../../input'
+import { withPassword } from '../../input/password'
 import { FormConfigContext, useFieldContext } from '../context'
 import { getThemeNameForStatus } from '../utils'
 
@@ -11,7 +12,7 @@ type FormExtraInputProps = {
   onClear?: () => void
 }
 
-export const FormInput = Input.styleable<FormExtraInputProps>((propsIn, forwardedRef) => {
+const FormInputFrame = Input.styleable<FormExtraInputProps>((propsIn, forwardedRef) => {
   const {
     allowClear,
     suffix,
@@ -82,4 +83,8 @@ export const FormInput = Input.styleable<FormExtraInputProps>((propsIn, forwarde
       }
     />
   )
+})
+
+export const FormInput = withStaticProperties(FormInputFrame, {
+  Password: withPassword(FormInputFrame),
 })
