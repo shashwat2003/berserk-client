@@ -3,12 +3,15 @@ import '@/tamagui/tamagui.css'
 import './_layout.css'
 
 import { TamaguiRootProvider } from '@/tamagui/root-provider'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { SchemeProvider } from '@vxrn/color-scheme'
 import { LoadProgressBar, Slot } from 'one'
 
 /**
  * The root _layout.tsx filters <html /> and <body /> out on native
  */
+
+const queryClient = new QueryClient()
 
 export default function Layout() {
   return (
@@ -27,7 +30,9 @@ export default function Layout() {
 
         <SchemeProvider>
           <TamaguiRootProvider>
-            <Slot />
+            <QueryClientProvider client={queryClient}>
+              <Slot />
+            </QueryClientProvider>
           </TamaguiRootProvider>
         </SchemeProvider>
       </body>

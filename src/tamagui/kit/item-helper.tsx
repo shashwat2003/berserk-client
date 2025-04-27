@@ -1,5 +1,5 @@
 import type { SizableTextProps } from 'tamagui'
-import { Typography } from '../typography'
+import { Typography } from './typography'
 
 type ItemHelperProps = SizableTextProps & {
   help: string

@@ -1,4 +1,4 @@
-import { Typography } from '@/tamagui/components/typography'
+import { Typography } from '@/tamagui/kit/typography'
 import { YStack } from 'tamagui'
 
 export function NotFound() {

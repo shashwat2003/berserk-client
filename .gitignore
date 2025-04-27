@@ -38,3 +38,4 @@ tsconfig.tsbuildinfo
 tamagui.css
 
 src/services/api/gen
+openapi-ts-error-*.log

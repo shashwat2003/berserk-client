@@ -1,13 +1,13 @@
-import { Input } from '../input'
+import { FormInput } from './components/input'
 import { fieldContext, formContext } from './context'
 import { createFormHook } from './create-form-hook'
 import { Submit } from './submit'
 
-export const { useAppForm } = createFormHook({
+export const { useAppForm, withForm } = createFormHook({
   fieldContext,
   formContext,
   fieldComponents: {
-    Input,
+    Input: FormInput,
   },
   formComponents: {
     Submit,

@@ -1,5 +1,5 @@
-import { getSchemaUrl } from '@/services/api/base'
 import { defaultPlugins, defineConfig } from '@hey-api/openapi-ts'
+import { getSchemaUrl } from './src/services/api/base'
 
 export default defineConfig({
   input: getSchemaUrl(),
